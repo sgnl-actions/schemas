@@ -130,6 +130,9 @@
         },
         "default": {
           "type": "string"
+        },
+        "required": {
+          "type": "boolean"
         }
       }
     },
