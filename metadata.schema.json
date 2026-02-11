@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/sgnl-actions/schemas/main/metadata.schema.json",
+  "title": "SGNL Action Metadata",
+  "description": "Schema for SGNL action metadata.yaml files",
+  "type": "object",
+  "required": ["name", "description", "inputs", "outputs"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Action identifier (kebab-case)",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of the action"
+    },
+    "inputs": {
+      "type": "object",
+      "description": "Input parameters for the action",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/input"
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "description": "Output fields returned by the action",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/output"
+      }
+    },
+    "secrets": {
+      "description": "Credentials required by the action",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/secret"
+          }
+        }
+      ]
+    },
+    "environment": {
+      "type": "object",
+      "description": "Environment variables available to the action",
+      "additionalProperties": {
+        "$ref": "#/$defs/environmentVariable"
+      }
+    },
+    "runtime": {
+      "$ref": "#/$defs/runtime"
+    }
+  },
+  "$defs": {
+    "input": {
+      "type": "object",
+      "required": ["type", "description", "required"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["text", "number", "boolean", "array", "email"]
+        },
+        "description": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "default": {},
+        "item_type": {
+          "type": "string",
+          "description": "Element type for array inputs",
+          "enum": ["text", "number", "boolean", "email"]
+        },
+        "validation": {
+          "$ref": "#/$defs/validation"
+        }
+      },
+      "if": {
+        "properties": { "type": { "const": "array" } }
+      },
+      "then": {
+        "required": ["type", "description", "required", "item_type"]
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": ["type", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["text", "number", "boolean", "datetime", "object", "array"]
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "secret": {
+      "type": "object",
+      "required": ["description", "required"],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "environmentVariable": {
+      "type": "object",
+      "required": ["description"],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "default": {
+          "type": "string"
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["nodejs-22"]
+        },
+        "timeout": {
+          "type": "string",
+          "pattern": "^[0-9]+(s|m)$",
+          "description": "Execution timeout (e.g., 30s, 5m)"
+        },
+        "memory": {
+          "type": "string",
+          "pattern": "^[0-9]+(Mi|Gi)$",
+          "description": "Memory limit (e.g., 128Mi, 1Gi)"
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minimum length (text) or size (array)"
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum length (text) or size (array)"
+        },
+        "regex": {
+          "type": "string",
+          "description": "Regular expression pattern"
+        },
+        "enum": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "Allowed values"
+        }
+      }
+    }
+  }
+}
