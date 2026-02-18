@@ -68,7 +68,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["text", "number", "boolean", "array", "email"]
+          "enum": ["text", "number", "boolean", "array", "email", "date", "time", "datetime"]
         },
         "description": {
           "type": "string"
@@ -80,7 +80,7 @@
         "item_type": {
           "type": "string",
           "description": "Element type for array inputs",
-          "enum": ["text", "number", "boolean", "email"]
+          "enum": ["text", "number", "boolean", "email", "date", "time", "datetime"]
         },
         "validation": {
           "$ref": "#/$defs/validation"
