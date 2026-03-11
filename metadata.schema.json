@@ -28,6 +28,10 @@
       "type": "object",
       "description": "Output fields returned by the action",
       "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[^.]+$",
+        "description": "Output key name (must not contain periods)"
+      },
       "additionalProperties": {
         "$ref": "#/$defs/output"
       }
