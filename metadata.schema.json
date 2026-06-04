@@ -72,7 +72,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["text", "number", "boolean", "array", "email", "date", "time", "datetime"]
+          "enum": ["text", "number", "boolean", "array", "email", "date", "time", "datetime", "object"]
         },
         "description": {
           "type": "string"
@@ -86,16 +86,33 @@
           "description": "Element type for array inputs",
           "enum": ["text", "number", "boolean", "email", "date", "time", "datetime"]
         },
+        "properties": {
+          "type": "object",
+          "description": "Nested field schemas for object type inputs",
+          "additionalProperties": { "$ref": "#/$defs/input" }
+        },
         "validation": {
           "$ref": "#/$defs/validation"
         }
       },
-      "if": {
-        "properties": { "type": { "const": "array" } }
-      },
-      "then": {
-        "required": ["type", "description", "required", "item_type"]
-      }
+      "allOf": [
+        {
+          "if": {
+            "properties": { "type": { "const": "array" } }
+          },
+          "then": {
+            "required": ["type", "description", "required", "item_type"]
+          }
+        },
+        {
+          "if": {
+            "properties": { "type": { "const": "object" } }
+          },
+          "then": {
+            "required": ["type", "description", "required", "properties"]
+          }
+        }
+      ]
     },
     "output": {
       "type": "object",
