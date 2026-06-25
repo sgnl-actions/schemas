@@ -86,7 +86,7 @@ if (!validate(metadata)) {
 
 ## Validation Groups
 
-Actions can declare validation requirements using `requires_one_of` and `optional_one_of`. These fields enable flexible validation at configuration time.
+Actions can declare validation requirements using `requires_one_of` and `optional_one_of`. These fields enable flexible validation.
 
 ### `requires_one_of`
 
