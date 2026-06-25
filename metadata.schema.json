@@ -60,6 +60,32 @@
         "$ref": "#/$defs/environmentVariable"
       }
     },
+    "requires_one_of": {
+      "type": "array",
+      "description": "At least one complete group must be satisfied",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^(inputs|secrets|environment)\\.",
+          "description": "Prefixed parameter key (e.g., 'secrets.BEARER_AUTH_TOKEN', 'environment.ADDRESS')"
+        },
+        "minItems": 1
+      }
+    },
+    "optional_one_of": {
+      "type": "array",
+      "description": "If any key is present, at least one complete group must be satisfied",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^(inputs|secrets|environment)\\.",
+          "description": "Prefixed parameter key (e.g., 'secrets.BASIC_USERNAME', 'environment.OAUTH2_CLIENT_CREDENTIALS_TOKEN_URL')"
+        },
+        "minItems": 1
+      }
+    },
     "runtime": {
       "$ref": "#/$defs/runtime"
     }
