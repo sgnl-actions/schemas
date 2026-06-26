@@ -63,6 +63,8 @@ if (!validate(metadata)) {
 |-------|------|-------------|
 | `secrets` | array or object | Required credentials |
 | `environment` | object | Environment variables |
+| `requires_one_of` | array | At least one complete group must be satisfied |
+| `optional_one_of` | array | If any key present, one complete group must be satisfied |
 | `runtime` | object | Runtime configuration (type, timeout, memory) |
 
 ### Input Types
@@ -81,6 +83,45 @@ if (!validate(metadata)) {
 | `max` | text, array | Maximum length or size |
 | `regex` | text | Regular expression pattern |
 | `enum` | text | Restricted set of allowed values |
+
+## Validation Groups
+
+Actions can declare validation requirements using `requires_one_of` and `optional_one_of`. These fields enable flexible validation.
+
+### `requires_one_of`
+
+At least one complete group must be satisfied (mandatory OR validation).
+
+**Example** - Action supports multiple auth types:
+
+```yaml
+requires_one_of:
+  - ["secrets.BEARER_AUTH_TOKEN"]
+  - ["secrets.OAUTH2_CLIENT_CREDENTIALS_CLIENT_ID", "secrets.OAUTH2_CLIENT_CREDENTIALS_CLIENT_SECRET", "environment.OAUTH2_CLIENT_CREDENTIALS_TOKEN_URL"]
+  - ["secrets.BASIC_USERNAME", "secrets.BASIC_PASSWORD"]
+```
+
+This action accepts Bearer token **OR** OAuth2 Client Credentials **OR** Basic auth.
+
+### `optional_one_of`
+
+If any key from any group is provided, at least one complete group must be satisfied (conditional OR validation).
+
+**Example** - Action with optional auth:
+
+```yaml
+optional_one_of:
+  - ["secrets.BEARER_AUTH_TOKEN"]
+  - ["secrets.BASIC_USERNAME", "secrets.BASIC_PASSWORD"]
+```
+
+Auth is optional, but if provided, it must be either complete Bearer **OR** complete Basic auth (not partial).
+
+### Key Prefixes
+
+- `inputs.` - References an input parameter
+- `secrets.` - References a secret credential
+- `environment.` - References an environment variable
 
 ## License
 
