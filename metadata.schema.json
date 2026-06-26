@@ -162,7 +162,7 @@
         "type": {
           "type": "string",
           "description": "Secret value type",
-          "enum": ["text", "number", "boolean", "array", "email", "date", "time", "datetime", "object"]
+          "enum": ["text", "number", "boolean", "array", "email", "date", "time", "datetime"]
         },
         "description": {
           "type": "string"
@@ -180,7 +180,7 @@
         "type": {
           "type": "string",
           "description": "Environment variable value type",
-          "enum": ["text", "number", "boolean", "array", "email", "date", "time", "datetime", "object"]
+          "enum": ["text", "number", "boolean", "array", "email", "date", "time", "datetime"]
         },
         "description": {
           "type": "string"
