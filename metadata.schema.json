@@ -156,9 +156,14 @@
     },
     "secret": {
       "type": "object",
-      "required": ["description", "required"],
+      "required": ["description"],
       "additionalProperties": false,
       "properties": {
+        "type": {
+          "type": "string",
+          "description": "Secret type (informational, used for UI display hints)",
+          "enum": ["text", "password"]
+        },
         "description": {
           "type": "string"
         },
@@ -172,6 +177,11 @@
       "required": ["description"],
       "additionalProperties": false,
       "properties": {
+        "type": {
+          "type": "string",
+          "description": "Environment variable type (informational)",
+          "enum": ["text", "number", "boolean"]
+        },
         "description": {
           "type": "string"
         },
