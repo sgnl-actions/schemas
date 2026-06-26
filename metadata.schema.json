@@ -161,8 +161,8 @@
       "properties": {
         "type": {
           "type": "string",
-          "description": "Secret type (informational, used for UI display hints)",
-          "enum": ["text", "password"]
+          "description": "Secret value type",
+          "enum": ["text", "number", "boolean", "array", "email", "date", "time", "datetime", "object"]
         },
         "description": {
           "type": "string"
@@ -179,8 +179,8 @@
       "properties": {
         "type": {
           "type": "string",
-          "description": "Environment variable type (informational)",
-          "enum": ["text", "number", "boolean"]
+          "description": "Environment variable value type",
+          "enum": ["text", "number", "boolean", "array", "email", "date", "time", "datetime", "object"]
         },
         "description": {
           "type": "string"
