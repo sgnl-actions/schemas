@@ -156,9 +156,14 @@
     },
     "secret": {
       "type": "object",
-      "required": ["description", "required"],
+      "required": ["description"],
       "additionalProperties": false,
       "properties": {
+        "type": {
+          "type": "string",
+          "description": "Secret value type",
+          "enum": ["text", "number", "boolean", "array", "email", "date", "time", "datetime"]
+        },
         "description": {
           "type": "string"
         },
@@ -172,6 +177,11 @@
       "required": ["description"],
       "additionalProperties": false,
       "properties": {
+        "type": {
+          "type": "string",
+          "description": "Environment variable value type",
+          "enum": ["text", "number", "boolean", "array", "email", "date", "time", "datetime"]
+        },
         "description": {
           "type": "string"
         },
