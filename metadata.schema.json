@@ -185,9 +185,6 @@
         "description": {
           "type": "string"
         },
-        "default": {
-          "type": "string"
-        },
         "required": {
           "type": "boolean"
         }
